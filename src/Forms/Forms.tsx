@@ -25,7 +25,7 @@ function Forms() {
       })
       .catch((error) => console.log(error));
   }, []);
-  const handleOptionChange = (event: ChangeEvent<HTMLSelectElement>) => {
+  const handleOptionChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.target.value);
   };
 
@@ -69,10 +69,10 @@ function Forms() {
       checkboxes.length === 0 ||
       (selectedCountry && !selectedCountry.trim())
     ) {
-      alert("Please fill in all fields.");
+      window.alert("Please fill in all fields.")
       return;
     } else {
-      alert("Data successfully saved.");
+      window.alert("Data successfully saved.");
     }
 
     const newCard = {
