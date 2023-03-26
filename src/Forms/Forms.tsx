@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import axios from "axios";
+import { Country } from "../types";
 
 function Forms() {
   const [text, setText] = useState("");
   const [date, setDate] = useState("");
-  const [checkboxes, setCheckboxes] = useState([]);
-  const [file, setFile] = useState(null);
+  const [checkboxes, setCheckboxes] = useState<string[]>([]);
+  const [file, setFile] = useState<File | null>(null);
   const [selectedOption, setSelectedOption] = useState("");
-  const [cards, setCards] = useState([]);
-  const [countries, setCountries] = useState([]);
+  const [cards, setCards] = useState<{
+      text: string;
+      date: string;
+      selectedOption: string;
+      checkboxes: string[];
+      file: File | null }[]
+  >([]);
+  const [countries, setCountries] = useState<Country[]>([]);
   const [selectedCountry, setSelectedCountry] = useState("");
   useEffect(() => {
     axios
@@ -18,38 +25,40 @@ function Forms() {
       })
       .catch((error) => console.log(error));
   }, []);
-  const handleOptionChange = (event) => {
+  const handleOptionChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
   };
 
-  const handleTextChange = (event) => {
+  const handleTextChange = (event: ChangeEvent<HTMLInputElement>) => {
     setText(event.target.value);
   };
 
-  const handleDateChange = (event) => {
+  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDate(event.target.value);
   };
 
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement> | null) => {
+    if (event?.target?.files?.length) {
+      setFile(event.target.files[0]);
+    } else {
+      setFile(null);
+    }
   };
 
-  const handleCheckboxChange = (event) => {
-    const value = event.target.value;
-    const isChecked = event.target.checked;
-
+  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value: string = event.target.value;
+    const isChecked: boolean = event.target.checked;
     if (isChecked) {
-      setCheckboxes([...checkboxes, value]);
+      setCheckboxes([...checkboxes, value] as never[]);
     } else {
       setCheckboxes(checkboxes.filter((item) => item !== value));
     }
   };
-
-  const handleCountryChange = (event) => {
+  const handleCountryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCountry(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (
       !text ||
@@ -149,7 +158,7 @@ function Forms() {
                 type="checkbox"
                 name="checkbox"
                 value="Yes"
-                checked={checkboxes.includes("Yes")}
+                defaultChecked={checkboxes.includes("Yes")}
                 onChange={handleCheckboxChange}
               />
               Yes
@@ -159,7 +168,7 @@ function Forms() {
                 type="checkbox"
                 name="checkbox"
                 value="No"
-                checked={checkboxes.includes("No")}
+                defaultChecked={checkboxes.includes("No")}
                 onChange={handleCheckboxChange}
               />
               No
@@ -191,7 +200,7 @@ function Forms() {
                   {selectedCountry && (
                     <div>
                       <p>
-                        Country: {countries.find(country => country.name.common === selectedCountry).name.common}
+                        Country: {selectedCountry ? countries.find(country => country.name.common === selectedCountry)?.name.common : ''}
                       </p>
                     </div>
                   )}
