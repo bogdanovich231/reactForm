@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import { Country } from '../types';
 
@@ -37,7 +37,7 @@ interface IProps {
   onSubmit: (card: ICard) => void;
   card: ICard;
 }
-export default class Forms extends React.Component<IProps, IState> {
+export default class Forms extends Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
