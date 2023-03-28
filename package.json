@@ -11,6 +11,7 @@
     "test": "jest --coverage",
     "eject": "react-scripts eject",
     "lint": "eslint .",
+    "lint:fix": "tsc --noEmit && eslint src/*/.ts{,x} --fix",
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
