@@ -1,8 +1,7 @@
 import React from 'react';
-import { render, fireEvent, screen  } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import Forms from '../Forms/Forms';
 import '@testing-library/jest-dom';
-
 
 describe('Forms component', () => {
   it('should update selectedOption on radio button change', () => {
