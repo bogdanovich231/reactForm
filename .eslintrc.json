@@ -1,4 +1,9 @@
 {
+    "settings": {
+      "react": {
+        "version": "16.13.1" // здесь нужно указать версию React
+    }
+    },
     "extends": [
       "eslint:recommended",
       "plugin:react/recommended",
@@ -11,6 +16,7 @@
     "plugins": [
       "react"
     ],
+    
     "parserOptions": {
       "ecmaVersion": 2021,
       "sourceType": "module",
@@ -26,5 +32,6 @@
     "rules": {
         "prettier/prettier": ["error", { "endOfLine": "auto" }]
     }
+    
   }
   
