@@ -12,6 +12,9 @@ body{
 section{
   margin: auto;
 }
+img{
+  width: 200px;
+}
 .form{
   width: 458px;
   height: 627px;
