@@ -2,18 +2,41 @@ import React from "react";
 import axios from "axios";
 import { Country } from "../types";
 
-class Forms extends React.Component {
-  constructor(props: any) {
+interface IState {
+  text: string;
+  date: string;
+  checkboxes: string[];
+  selectedOption: string | undefined;
+  file: File | null;
+  cards: Array<{ title: string; description: string; } | { text: string; date: string; selectedOption: string | undefined; checkboxes: string[]; file: File | null; }> ;
+  countries: Country[];
+  selectedCountry: string;
+}
+interface ICard {
+  title?: string;
+  description?: string;
+  text?: string;
+  date?: string;  
+  selectedOption?: string;
+  checkboxes?: string[];
+  file?: File | null;
+}
+interface IProps {
+  onSubmit: (card: ICard) => void;
+  card: ICard;
+}
+export class Forms extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
     this.state = {
-      text: "",
-      date: "",
-      checkboxes: [],
+      text: '',
+      date: '',
+      checkboxes: [], // инициализируем пустым массивом
+      selectedOption: '',
       file: null,
-      selectedOption: "",
       cards: [],
       countries: [],
-      selectedCountry: "",
+      selectedCountry: '',
     };
     this.handleOptionChange = this.handleOptionChange.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
@@ -26,7 +49,7 @@ class Forms extends React.Component {
 
   componentDidMount() {
     axios
-      .get("https://restcountries.com/v3.1/all")
+      .get<Country[]>("https://restcountries.com/v3.1/all")
       .then((response) => {
         this.setState({ countries: response.data });
       })
@@ -70,6 +93,7 @@ class Forms extends React.Component {
     this.setState({ selectedCountry: event.target.value });
   }
 
+
   handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const {
@@ -90,20 +114,21 @@ class Forms extends React.Component {
       checkboxes.length === 0 ||
       (selectedCountry && !selectedCountry.trim())
     ) {
-      window.alert("Please fill in all fields.");
+      window.alert("Please fill in all fields");
       return;
     } else {
       window.alert("Data successfully saved.");
     }
-
+  
     const newCard = {
       text,
       date,
       selectedOption,
       checkboxes,
       file,
+      selectedCountry,
     };
-
+  
     this.setState({
       cards: [...cards, newCard],
       text: "",
@@ -111,10 +136,13 @@ class Forms extends React.Component {
       selectedOption: "",
       checkboxes: [],
       file: null,
+      selectedCountry: '',
     });
+
   }
 
   render() {
+    const card = this.props.card as ICard;
     const {
       text,
       date,
@@ -199,16 +227,6 @@ class Forms extends React.Component {
               />
               Yes
             </label>
-            <label>
-              <input
-                type="checkbox"
-                name="checkbox"
-                value="No"
-                defaultChecked={checkboxes.includes("No")}
-                onChange={this.handleCheckboxChange}
-              />
-              No
-            </label>
           </div>
           <div className="inputFile">
             <label>
@@ -229,27 +247,12 @@ class Forms extends React.Component {
               <div className="card" key={index}>
                 <h3>Card {index + 1}</h3>
                 <div className="card_info">
-                  <p>Name: {card.text}</p>
-                  <p>Your birthday: {card.date}</p>
-                  <p>Sex: {card.selectedOption}</p>
-                  <p>I consent to my personal data: {card.checkboxes}</p>
-                  {selectedCountry && (
-                    <div>
-                      <p>
-                        Country: {selectedCountry ? countries.find(country => country.name.common === selectedCountry)?.name.common : ''}
-                      </p>
-                    </div>
-                  )}
-                  {card.file && (
-                    <div>
-                      <h4>Profile photo:</h4>
-                      <img
-                        src={URL.createObjectURL(card.file)}
-                        alt="profile"
-                        style={{ width: "250px" }}
-                      />
-                    </div>
-                  )}
+                {'text' in card && <p>Name: {card.text}</p>}
+                {'date' in card && <p>Your birthday: {card.date}</p>}
+                {'selectedOption' in card && <p>Sex: {card.selectedOption}</p>}
+                {"selectedCountry" && <p>Country: {selectedCountry}</p>}
+                {'checkboxes' in card && <p>I consent to my personal data: {card.checkboxes?.join(", ")}</p>}
+                {'file' in card && card.file && <img className="img" src={URL.createObjectURL(card.file)} alt="file" />}
                 </div>
               </div>
             ))}
@@ -265,4 +268,3 @@ class Forms extends React.Component {
                 );
             }
           }
-            export default Forms;
