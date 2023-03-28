@@ -1,7 +1,6 @@
-import React from "react";
-import { render, fireEvent } from "@testing-library/react";
-import {Forms} from "../Forms/Forms";
-
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react';
+import Forms from '../Forms/Forms';
 
 describe('Forms component', () => {
   it('should render without errors', () => {
@@ -34,11 +33,11 @@ describe('Forms component', () => {
     const { container } = render(<Forms onSubmit={jest.fn()} card={{}} />);
     const input = container.querySelector('input[type="file"]') as HTMLInputElement;
     fireEvent.change(input, {
-      target: { files: [new File(['(⌐□_□)'], 'test.png', { type: 'image/png' })] }
+      target: { files: [new File(['(⌐□_□)'], 'test.png', { type: 'image/png' })] },
     });
     expect(input.files![0].name).toBe('test.png');
   });
-  
+
   it('should update state on checkbox change', () => {
     const { getByLabelText } = render(<Forms onSubmit={jest.fn()} card={{}} />);
     const checkbox1 = getByLabelText('Checkbox 1');
