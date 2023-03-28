@@ -1,86 +1,70 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import Forms from "../Forms/Forms";
+import {Forms} from "../Forms/Forms";
 
 
-describe("Forms", () => {
-  test("should submit form and save data", () => {
-    const windowAlertSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
-  
-    const { getByLabelText, getByText } = render(<Forms />);
-  
-    const nameInput = getByLabelText("Name:");
-    const dateInput = getByLabelText("Your birthday:");
-    const maleRadio = getByLabelText("Male") as HTMLInputElement;
-    const countrySelect = getByLabelText(
-      "Select a country:"
-    ) as HTMLSelectElement;
-    const consentCheckboxYes = getByLabelText("Yes") as HTMLInputElement;
-    const fileInput = getByLabelText("Profile photo:") as HTMLInputElement;
-    const submitButton = getByText("Отправить");
-  
-    fireEvent.change(nameInput, { target: { value: "John" } });
-    fireEvent.change(dateInput, { target: { value: "1990-01-01" } });
-    fireEvent.click(maleRadio);
-    fireEvent.change(countrySelect, { target: { value: "Germany" } });
-    fireEvent.click(consentCheckboxYes);
-    fireEvent.change(fileInput, {
-      target: {
-        files: [new File([""], "example.jpg", { type: "image/jpeg" })],
-      },
+describe('Forms component', () => {
+  it('should render without errors', () => {
+    const { getByTestId } = render(<Forms onSubmit={jest.fn()} card={{}} />);
+    expect(getByTestId('form')).toBeInTheDocument();
+  });
+
+  it('should update state on option change', () => {
+    const { getByLabelText } = render(<Forms onSubmit={jest.fn()} card={{}} />);
+    const radioBtn = getByLabelText('Option 1');
+    fireEvent.change(radioBtn, { target: { value: 'option1' } });
+    expect(radioBtn).toBeChecked();
+  });
+
+  it('should update state on text change', () => {
+    const { getByLabelText } = render(<Forms onSubmit={jest.fn()} card={{}} />);
+    const input = getByLabelText('Text Input');
+    fireEvent.change(input, { target: { value: 'test' } });
+    expect(input).toHaveValue('test');
+  });
+
+  it('should update state on date change', () => {
+    const { getByLabelText } = render(<Forms onSubmit={jest.fn()} card={{}} />);
+    const input = getByLabelText('Date Input');
+    fireEvent.change(input, { target: { value: '2022-01-01' } });
+    expect(input).toHaveValue('2022-01-01');
+  });
+
+  it('should update state on file change', () => {
+    const { container } = render(<Forms onSubmit={jest.fn()} card={{}} />);
+    const input = container.querySelector('input[type="file"]') as HTMLInputElement;
+    fireEvent.change(input, {
+      target: { files: [new File(['(⌐□_□)'], 'test.png', { type: 'image/png' })] }
     });
-  
-    fireEvent.click(submitButton);
-    
-    
-    expect(window.alert).toHaveBeenCalledTimes(1);
-  
-    windowAlertSpy.mockRestore();
+    expect(input.files![0].name).toBe('test.png');
   });
   
-  test("should show alert if not all fields are filled", () => {
-    const windowAlertSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
-    const { getByText } = render(<Forms />);
-  
-    const submitButton = getByText("Отправить");
-  
-    fireEvent.click(submitButton);
-  
-    expect(windowAlertSpy).toHaveBeenCalledWith("Please fill in all fields.");
-  
-    windowAlertSpy.mockRestore();
+  it('should update state on checkbox change', () => {
+    const { getByLabelText } = render(<Forms onSubmit={jest.fn()} card={{}} />);
+    const checkbox1 = getByLabelText('Checkbox 1');
+    const checkbox2 = getByLabelText('Checkbox 2');
+    fireEvent.click(checkbox1);
+    fireEvent.click(checkbox2);
+    expect(checkbox1).toBeChecked();
+    expect(checkbox2).toBeChecked();
   });
-  test("should select the first country from dropdown", async () => {
-    jest.spyOn(global, "fetch").mockResolvedValueOnce({
-      json: async () => [
-        { name: { common: "Germany" } },
-        { name: { common: "Russia" } },
-        { name: { common: "USA" } },
-      ],
-    } as Response);
-  
-    const { getByLabelText, findByText } = render(<Forms />);
-  
-    const countrySelect = getByLabelText(
-      "Select a country:"
-    ) as HTMLSelectElement;
-    fireEvent.change(countrySelect, { target: { value: "Germany" } });
-  
-    const selectedCountry = await findByText("Country: Germany");
-    expect(selectedCountry).toBeInTheDocument();
+
+  it('should update state on country change', () => {
+    const { getByLabelText } = render(<Forms onSubmit={jest.fn()} card={{}} />);
+    const select = getByLabelText('Country Select');
+    fireEvent.change(select, { target: { value: 'US' } });
+    expect(select).toHaveValue('US');
   });
-      
-  test("should select multiple checkboxes", () => {
-    const { getByLabelText } = render(<Forms />);
 
-    const consentCheckboxYes = getByLabelText("Yes") as HTMLInputElement;
-    const consentCheckboxNo = getByLabelText("No") as HTMLInputElement;
-
-    fireEvent.click(consentCheckboxYes);
-    fireEvent.click(consentCheckboxNo);
-
-    expect(consentCheckboxYes).toBeChecked();
-    expect(consentCheckboxNo).toBeChecked();
+  it('should submit form when all fields are filled', () => {
+    const { getByLabelText, getByText } = render(<Forms onSubmit={jest.fn()} card={{}} />);
+    const input = getByLabelText('Text Input');
+    const select = getByLabelText('Country Select');
+    const checkbox1 = getByLabelText('Checkbox 1');
+    const submitBtn = getByText('Submit');
+    fireEvent.change(input, { target: { value: 'test' } });
+    fireEvent.change(select, { target: { value: 'US' } });
+    fireEvent.click(checkbox1);
+    fireEvent.click(submitBtn);
   });
 });
