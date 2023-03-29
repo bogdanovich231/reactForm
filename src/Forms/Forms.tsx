@@ -142,8 +142,7 @@ export default class Forms extends Component<IProps, IState> {
   }
 
   render() {
-    const card = this.props.card as ICard;
-    const { text, date, checkboxes, file, selectedOption, cards, countries, selectedCountry } =
+    const { text, date, checkboxes, selectedOption, cards, countries, selectedCountry } =
       this.state;
 
     return (
