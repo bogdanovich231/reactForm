@@ -6,7 +6,7 @@ import '@testing-library/jest-dom';
 
 jest.mock('axios');
 
-test('SearchBar component', () => {
+describe('SearchBar component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
