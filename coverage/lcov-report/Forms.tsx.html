@@ -278,7 +278,8 @@
 <a name='L213'></a><a href='#L213'>213</a>
 <a name='L214'></a><a href='#L214'>214</a>
 <a name='L215'></a><a href='#L215'>215</a>
-<a name='L216'></a><a href='#L216'>216</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L216'></a><a href='#L216'>216</a>
+<a name='L217'></a><a href='#L217'>217</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -289,6 +290,8 @@
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -414,10 +417,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -463,6 +462,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -491,231 +492,233 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState, useEffect, ChangeEvent } from 'react';
 import axios from 'axios';
 import { Country } from '../types';
 &nbsp;
 function Forms() {
-    const [text, setText] = useState("");
-    const [date, setDate] = useState("");
-    const [checkboxes, setCheckboxes] = useState&lt;string[]&gt;([]);
-    const [file, setFile] = useState&lt;File | null&gt;(null);
-    const [selectedOption, setSelectedOption] = useState("");
-    const [cards, setCards] = useState&lt;{
-        text: string;
-        date: string;
-        selectedOption: string;
-        checkboxes: string[];
-        file: File | null }[]
-    &gt;([]);
-    const [countries, setCountries] = useState&lt;Country[]&gt;([]);
-    const [selectedCountry, setSelectedCountry] = useState("");
-    useEffect(() =&gt; {
-      axios
-        .get("https://restcountries.com/v3.1/all")
-        .then(<span class="fstat-no" title="function not covered" >(r</span>esponse) =&gt; {
-<span class="cstat-no" title="statement not covered" >          setCountries(response.data);</span>
-        })
-        .catch(<span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; <span class="cstat-no" title="statement not covered" >console.log(error))</span>;
-    }, []);
-    const handleOptionChange = (event: ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
-        setSelectedOption(event.target.value);
+  const [text, setText] = useState('');
+  const [date, setDate] = useState('');
+  const [checkboxes, setCheckboxes] = useState&lt;string[]&gt;([]);
+  const [file, setFile] = useState&lt;File | null&gt;(null);
+  const [selectedOption, setSelectedOption] = useState('');
+  const [cards, setCards] = useState&lt;
+    {
+      text: string;
+      date: string;
+      selectedOption: string;
+      checkboxes: string[];
+      file: File | null;
+    }[]
+  &gt;([]);
+  const [countries, setCountries] = useState&lt;Country[]&gt;([]);
+  const [selectedCountry, setSelectedCountry] = useState('');
+  useEffect(() =&gt; {
+    axios
+      .get('https://restcountries.com/v3.1/all')
+      .then(<span class="fstat-no" title="function not covered" >(r</span>esponse) =&gt; {
+<span class="cstat-no" title="statement not covered" >        setCountries(response.data);</span>
+      })
+      .catch(<span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; <span class="cstat-no" title="statement not covered" >console.log(error))</span>;
+  }, []);
+  const handleOptionChange = (event: ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
+    setSelectedOption(event.target.value);
+  };
+  const handleTextChange = (event: ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
+    setText(event.target.value);
+  };
+  const handleDateChange = (event: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
+    setDate(event.target.value);
+  };
+  const handleFileChange = (event: ChangeEvent&lt;HTMLInputElement&gt; | null) =&gt; {
+    if (event?.target?.files?.length) {
+      setFile(event.target.files[0]);
+    } else <span class="missing-if-branch" title="else path not taken" >E</span>{
+<span class="cstat-no" title="statement not covered" >      setFile(null);</span>
+    }
+  };
+  const handleCheckboxChange = (event: ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
+    const value: string = event.target.value;
+    const isChecked: boolean = event.target.checked;
+    if (isChecked) {
+      setCheckboxes([...checkboxes, value] as never[]);
+    } else <span class="missing-if-branch" title="else path not taken" >E</span>{
+<span class="cstat-no" title="statement not covered" >      setCheckboxes(checkboxes.filter(<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; <span class="cstat-no" title="statement not covered" >item !== value)</span>);</span>
+    }
+  };
+  const handleCountryChange = <span class="fstat-no" title="function not covered" >(e</span>vent: React.ChangeEvent&lt;HTMLSelectElement&gt;) =&gt; {
+<span class="cstat-no" title="statement not covered" >    setSelectedCountry(event.target.value);</span>
+  };
+  const handleSubmit = (event: React.FormEvent&lt;HTMLFormElement&gt;) =&gt; {
+    event.preventDefault();
+    if (
+      !text ||
+<span class="branch-1 cbranch-no" title="branch not covered" >      !date </span>||
+<span class="branch-2 cbranch-no" title="branch not covered" >      !selectedOption </span>||
+<span class="branch-3 cbranch-no" title="branch not covered" >      !file </span>||
+<span class="branch-4 cbranch-no" title="branch not covered" >      !selectedCountry </span>||
+<span class="branch-5 cbranch-no" title="branch not covered" >      checkboxes.length === 0 </span>||
+      (<span class="branch-6 cbranch-no" title="branch not covered" >selectedCountry </span>&amp;&amp; <span class="branch-7 cbranch-no" title="branch not covered" >!selectedCountry.trim())</span>
+    ) {
+      window.alert('Please fill in all fields.');
+    } else <span class="missing-if-branch" title="else path not taken" >E</span>{
+<span class="cstat-no" title="statement not covered" >      window.alert('Data successfully saved.');</span>
+    }
+    const newCard = {
+      text,
+      date,
+      selectedOption,
+      checkboxes,
+      file,
     };
-    const handleTextChange = (event: ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
-        setText(event.target.value);
-    };
-    const handleDateChange = (event: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
-        setDate(event.target.value);
-    };
-    const handleFileChange = (event: ChangeEvent&lt;HTMLInputElement&gt; | null) =&gt; {
-        if (event?.target?.files?.length) {
-          setFile(event.target.files[0]);
-        } else <span class="missing-if-branch" title="else path not taken" >E</span>{
-<span class="cstat-no" title="statement not covered" >          setFile(null);</span>
-        }
-    };
-    const handleCheckboxChange = (event: ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
-        const value: string = event.target.value;
-        const isChecked: boolean = event.target.checked;
-        if (isChecked) {
-          setCheckboxes([...checkboxes, value] as never[]);
-        } else <span class="missing-if-branch" title="else path not taken" >E</span>{
-<span class="cstat-no" title="statement not covered" >          setCheckboxes(checkboxes.filter(<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; <span class="cstat-no" title="statement not covered" >item !== value)</span>);</span>
-        }
-    };
-    const handleCountryChange = <span class="fstat-no" title="function not covered" >(e</span>vent: React.ChangeEvent&lt;HTMLSelectElement&gt;) =&gt; {
-<span class="cstat-no" title="statement not covered" >        setSelectedCountry(event.target.value);</span>
-      };
-      const handleSubmit = (event: React.FormEvent&lt;HTMLFormElement&gt;) =&gt; {
-        event.preventDefault();
-        if (
-          !text ||
-<span class="branch-1 cbranch-no" title="branch not covered" >          !date </span>||
-<span class="branch-2 cbranch-no" title="branch not covered" >          !selectedOption </span>||
-<span class="branch-3 cbranch-no" title="branch not covered" >          !file </span>||
-<span class="branch-4 cbranch-no" title="branch not covered" >          !selectedCountry </span>||
-<span class="branch-5 cbranch-no" title="branch not covered" >          checkboxes.length === 0 </span>||
-          (<span class="branch-6 cbranch-no" title="branch not covered" >selectedCountry </span>&amp;&amp; <span class="branch-7 cbranch-no" title="branch not covered" >!selectedCountry.trim())</span>
-        ) {
-          window.alert("Please fill in all fields.");
-        } else <span class="missing-if-branch" title="else path not taken" >E</span>{
-<span class="cstat-no" title="statement not covered" >          window.alert("Data successfully saved.");</span>
-        }
-        const newCard = {
-          text,
-          date,
-          selectedOption,
-          checkboxes,
-          file
-        };
-        setCards([...cards, newCard]);
-        setText("");
-        setDate("");
-        setSelectedOption("");
-        setCheckboxes([]);
-        setFile(null);
-      };
+    setCards([...cards, newCard]);
+    setText('');
+    setDate('');
+    setSelectedOption('');
+    setCheckboxes([]);
+    setFile(null);
+  };
 &nbsp;
-    return (
-        &lt;section&gt;
-          &lt;div className="form"&gt;
-            &lt;h1&gt;Fill out your information&lt;/h1&gt;
-            &lt;form onSubmit={handleSubmit}&gt;
-              &lt;div className="inputName"&gt;
-                &lt;label&gt;
-                  Name:
-                  &lt;input type="text" value={text} onChange={handleTextChange} /&gt;
-                &lt;/label&gt;
-              &lt;/div&gt;
-              &lt;div className="inputDate"&gt;
-                &lt;label&gt;
-                  Your birthday:
-                  &lt;input type="date" value={date} onChange={handleDateChange} /&gt;
-                &lt;/label&gt;
-              &lt;/div&gt;
-              &lt;div className="inputSex"&gt;
-                &lt;p&gt;Sex:&lt;/p&gt;
-                &lt;div className="inputSexLabel"&gt;
-                  &lt;div&gt;
-                    &lt;label&gt;
-                      &lt;input
-                        type="radio"
-                        value="Male"
-                        checked={selectedOption === "Male"}
-                        onChange={handleOptionChange}
-                      /&gt;
-                      Male
-                    &lt;/label&gt;
-                  &lt;/div&gt;
-                  &lt;div&gt;
-                    &lt;label&gt;
-                      &lt;input
-                        type="radio"
-                        value="Female"
-                        checked={selectedOption === "Female"}
-                        onChange={handleOptionChange}
-                      /&gt;
-                      Female
-                    &lt;/label&gt;
-                  &lt;/div&gt;
-                &lt;/div&gt;
-              &lt;/div&gt;
-              &lt;div className="selectCountry"&gt;
-                &lt;label className="country-select" htmlFor="country-select"&gt;
-                  Select a country:
-                &lt;/label&gt;
-                &lt;select
-                  id="country-select"
-                  value={selectedCountry}
-                  onChange={handleCountryChange}
-                &gt;
-                  &lt;option value=""&gt;Choose a country&lt;/option&gt;
-                  {countries.map(<span class="fstat-no" title="function not covered" >(c</span>ountry) =&gt; (
-<span class="cstat-no" title="statement not covered" >                    &lt;option key={country.name.common} v</span>alue={country.name.common}&gt;
-                      {country.name.common}
-                    &lt;/option&gt;
-                  ))}
-                &lt;/select&gt;
-              &lt;/div&gt;
-              &lt;div className="inputPersonal"&gt;
-                &lt;p&gt;I consent to my personal data&lt;/p&gt;
+  return (
+    &lt;section&gt;
+      &lt;div className="form"&gt;
+        &lt;h1&gt;Fill out your information&lt;/h1&gt;
+        &lt;form onSubmit={handleSubmit}&gt;
+          &lt;div className="inputName"&gt;
+            &lt;label&gt;
+              Name:
+              &lt;input type="text" value={text} onChange={handleTextChange} /&gt;
+            &lt;/label&gt;
+          &lt;/div&gt;
+          &lt;div className="inputDate"&gt;
+            &lt;label&gt;
+              Your birthday:
+              &lt;input type="date" value={date} onChange={handleDateChange} /&gt;
+            &lt;/label&gt;
+          &lt;/div&gt;
+          &lt;div className="inputSex"&gt;
+            &lt;p&gt;Sex:&lt;/p&gt;
+            &lt;div className="inputSexLabel"&gt;
+              &lt;div&gt;
                 &lt;label&gt;
                   &lt;input
-                    type="checkbox"
-                    name="checkbox"
-                    value="Yes"
-                    defaultChecked={checkboxes.includes("Yes")}
-                    onChange={handleCheckboxChange}
+                    type="radio"
+                    value="Male"
+                    checked={selectedOption === 'Male'}
+                    onChange={handleOptionChange}
                   /&gt;
-                  Yes
+                  Male
                 &lt;/label&gt;
               &lt;/div&gt;
-              &lt;div className="inputFile"&gt;
+              &lt;div&gt;
                 &lt;label&gt;
-                  Profile photo:
-                  &lt;input type="file" onChange={handleFileChange} /&gt;
+                  &lt;input
+                    type="radio"
+                    value="Female"
+                    checked={selectedOption === 'Female'}
+                    onChange={handleOptionChange}
+                  /&gt;
+                  Female
                 &lt;/label&gt;
               &lt;/div&gt;
-              &lt;div className="submit"&gt;
-                &lt;button type="submit"&gt;Submit&lt;/button&gt;
-              &lt;/div&gt;
-            &lt;/form&gt;
+            &lt;/div&gt;
           &lt;/div&gt;
+          &lt;div className="selectCountry"&gt;
+            &lt;label className="country-select" htmlFor="country-select"&gt;
+              Select a country:
+            &lt;/label&gt;
+            &lt;select id="country-select" value={selectedCountry} onChange={handleCountryChange}&gt;
+              &lt;option value=""&gt;Choose a country&lt;/option&gt;
+              {countries.map(<span class="fstat-no" title="function not covered" >(c</span>ountry) =&gt; (
+<span class="cstat-no" title="statement not covered" >                &lt;option key={country.name.common} v</span>alue={country.name.common}&gt;
+                  {country.name.common}
+                &lt;/option&gt;
+              ))}
+            &lt;/select&gt;
+          &lt;/div&gt;
+          &lt;div className="inputPersonal"&gt;
+            &lt;p&gt;I consent to my personal data&lt;/p&gt;
+            &lt;label&gt;
+              &lt;input
+                type="checkbox"
+                name="checkbox"
+                value="Yes"
+                defaultChecked={checkboxes.includes('Yes')}
+                onChange={handleCheckboxChange}
+              /&gt;
+              Yes
+            &lt;/label&gt;
+          &lt;/div&gt;
+          &lt;div className="inputFile"&gt;
+            &lt;label&gt;
+              Profile photo:
+              &lt;input type="file" onChange={handleFileChange} /&gt;
+            &lt;/label&gt;
+          &lt;/div&gt;
+          &lt;div className="submit"&gt;
+            &lt;button type="submit"&gt;Submit&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/form&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        {cards.length &gt; 0 ? (
           &lt;div&gt;
-            {cards.length &gt; 0 ? (
-              &lt;div&gt;
-                &lt;h2&gt;Information cards&lt;/h2&gt;
-                {cards.map((card, index) =&gt; (
-                  &lt;div className="card" key={index}&gt;
-                    &lt;h3&gt;Card {index + 1}&lt;/h3&gt;
-                    &lt;div className="card_info"&gt;
-                      &lt;p&gt;Name: {card.text}&lt;/p&gt;
-                      &lt;p&gt;Your birthday: {card.date}&lt;/p&gt;
-                      &lt;p&gt;Sex: {card.selectedOption}&lt;/p&gt;
-                      &lt;p&gt;I consent to my personal data: {card.checkboxes}&lt;/p&gt;
-                      {selectedCountry &amp;&amp; (
-<span class="branch-1 cbranch-no" title="branch not covered" >                        &lt;div&gt;</span>
-                          &lt;p&gt;
-                            Country: {selectedCountry ? countries.find(<span class="fstat-no" title="function not covered" >country </span>=&gt; <span class="cstat-no" title="statement not covered" >country.name.common === selectedCountry)</span>?.name.common : ''}
-                          &lt;/p&gt;
-                        &lt;/div&gt;
-                      )}
-                      {card.file &amp;&amp; (
-<span class="branch-1 cbranch-no" title="branch not covered" >                        &lt;div&gt;</span>
-                          &lt;h4&gt;Profile photo:&lt;/h4&gt;
-                          &lt;img
-                            src={URL.createObjectURL(card.file)}
-                            alt="profile"
-                            style={{ width: "250px" }}
-                          /&gt;
-                        &lt;/div&gt;
-                      )}
+            &lt;h2&gt;Information cards&lt;/h2&gt;
+            {cards.map((card, index) =&gt; (
+              &lt;div className="card" key={index}&gt;
+                &lt;h3&gt;Card {index + 1}&lt;/h3&gt;
+                &lt;div className="card_info"&gt;
+                  &lt;p&gt;Name: {card.text}&lt;/p&gt;
+                  &lt;p&gt;Your birthday: {card.date}&lt;/p&gt;
+                  &lt;p&gt;Sex: {card.selectedOption}&lt;/p&gt;
+                  &lt;p&gt;I consent to my personal data: {card.checkboxes}&lt;/p&gt;
+                  {selectedCountry &amp;&amp; (
+<span class="branch-1 cbranch-no" title="branch not covered" >                    &lt;div&gt;</span>
+                      &lt;p&gt;
+                        Country: {''}
+                        {selectedCountry
+                          ? countries.find(<span class="fstat-no" title="function not covered" >(c</span>ountry) =&gt; <span class="cstat-no" title="statement not covered" >country.name.common === selectedCountry)</span>
+                              ?.name.common
+                          : ''}
+                      &lt;/p&gt;
                     &lt;/div&gt;
-                  &lt;/div&gt;
-                ))}
+                  )}
+                  {card.file &amp;&amp; (
+<span class="branch-1 cbranch-no" title="branch not covered" >                    &lt;div&gt;</span>
+                      &lt;h4&gt;Profile photo:&lt;/h4&gt;
+                      &lt;img
+                        src={URL.createObjectURL(card.file)}
+                        alt="profile"
+                        style={{ width: '250px' }}
+                      /&gt;
+                    &lt;/div&gt;
+                  )}
+                &lt;/div&gt;
               &lt;/div&gt;
-            ) : (
-              &lt;div&gt;
-                &lt;h2&gt;Information cards&lt;/h2&gt;
-                &lt;p&gt;No data to display.&lt;/p&gt;
-              &lt;/div&gt;
-            )}
+            ))}
           &lt;/div&gt;
-        &lt;/section&gt;
-      );
-    }
-    export default Forms;
-&nbsp;
-       </pre></td></tr></table></pre>
+        ) : (
+          &lt;div&gt;
+            &lt;h2&gt;Information cards&lt;/h2&gt;
+            &lt;p&gt;No data to display.&lt;/p&gt;
+          &lt;/div&gt;
+        )}
+      &lt;/div&gt;
+    &lt;/section&gt;
+  );
+}
+export default Forms;
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-03-31T23:50:32.718Z
+                at 2023-04-01T18:07:37.334Z
             </div>
         <script src="prettify.js"></script>
         <script>
