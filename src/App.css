@@ -1,28 +1,23 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-  background: #985ACE;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inika&display=swap');
 body{
-  background: #985ACE;
-
+  font-family: 'Inika', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 section{
   margin: auto;
+  text-align: center;
 }
 img{
   width: 200px;
 }
 .form{
   width: 458px;
-  height: 627px;
+  height: 579px;
   background: #FFFFFF;
   box-shadow: 0px 4px 17px rgba(0, 0, 0, 0.17);
   border-radius: 30px;
-  width: 458px;
-    height: 605px;
 }
 form{
   display: flex;
@@ -133,10 +128,18 @@ option {
 }
 .submit button{
   background: #985ACE;
-border-radius: 7px;
-color: #FFFFFF;
-margin-top: 25px;
-
+  border-radius: 7px;
+  color: #FFFFFF;
+  margin-top: 25px;
+  padding: 10px 55px;
+  border: none;
+  font-size: 15px;
+}
+.submit button:hover{
+  transition: all 1s ease-out;
+  color: black;
+  background: rgba(0, 0, 0, 0);
+  border: 1px solid #985ACE;
 }
 .country-select{
   padding-left: 10px;
@@ -156,10 +159,27 @@ margin-top: 25px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 10px;
 }
-h2{
-  color: #FFFFFF;
-}
+
 h4{
   margin: 5px 0px;
+}
+.header_menu ul{
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin-bottom: 40px;
+  margin-top: 30px;
+}
+.about{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 45em;
+  text-align: center;
+}
+.about h3{
+  font-size: 30px;
+  margin-top: 0px;
 }
