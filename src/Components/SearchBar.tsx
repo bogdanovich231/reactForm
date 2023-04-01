@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import BookCard from '../Components/BookCard';
 import axios from 'axios';
 
-
 interface Book {
   volumeInfo: {
     imageLinks: {

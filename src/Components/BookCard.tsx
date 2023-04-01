@@ -30,7 +30,7 @@ const BookCard: React.FC<Props> = ({ books }) => {
       const thumbnail = book.volumeInfo.imageLinks?.smallThumbnail;
       const count = book.saleInfo.listPrice?.amount;
 
-      if (thumbnail && count) { 
+      if (thumbnail && count) {
         newThumbnails.push(thumbnail);
         newCounts.push(count);
       }
