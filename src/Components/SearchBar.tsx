@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BookCard from '../Components/BookCard';
 import axios from 'axios';
 
@@ -15,11 +15,13 @@ interface Book {
     };
   };
 }
+
 interface BookData {
   items: Book[];
 }
+
 const SearchBar: React.FC = () => {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(localStorage.getItem('search') || '');
   const [bookData, setBookData] = useState<Book[]>([]);
 
   function searchBook(event: React.KeyboardEvent<HTMLInputElement>): void {
@@ -32,6 +34,10 @@ const SearchBar: React.FC = () => {
         .catch((err) => console.log(err));
     }
   }
+
+  useEffect(() => {
+    localStorage.setItem('search', search);
+  }, [search]);
 
   return (
     <>
